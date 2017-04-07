@@ -361,7 +361,7 @@ Method - createPirate
       )
 ```
 
-In AddPirateForm (above render:
+In AddPirateForm (above render):
 
 ```
 createPirate(event) {

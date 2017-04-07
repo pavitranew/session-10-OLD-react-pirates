@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class AddPirateForm extends Component {
 
   createPirate(event){
-    event.preventDefault();
-    console.log('making a pirate');
+    event.preventDefault()
+    console.log('making a pirate')
     const pirate = {
       name: this.name.value,
       vessel: this.vessel.value,
       weapon: this.weapon.value
     }
+    console.log(pirate)
   }
 
   render(){
@@ -24,4 +25,4 @@ class AddPirateForm extends Component {
   }
 }
 
-export default AddPirateForm;
+export default AddPirateForm

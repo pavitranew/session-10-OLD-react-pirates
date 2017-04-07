@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import './App.css';
-import Pirate from './Pirate';
-import Header from './Header';
-import PirateForm from './PirateForm';
+import React, { Component } from 'react'
+import './App.css'
+import Pirate from './Pirate'
+import Header from './Header'
+import PirateForm from './PirateForm'
 
 class App extends Component {
 
   constructor() {
     super();
     console.log(this) // App
-    this.addPirate = this.addPirate.bind(this);
+    this.addPirate = this.addPirate.bind(this)
     this.state = {
       pirates: {}
     }
@@ -20,8 +20,8 @@ class App extends Component {
     //update state
     const pirates = {...this.state.pirates}
     //add new pirate
-    const timestamp = Date.now();
-    pirates[`pirate-${timestamp}`] = pirate;
+    const timestamp = Date.now()
+    pirates[`pirate-${timestamp}`] = pirate
     //set state
     this.setState({ pirates: pirates })
   }

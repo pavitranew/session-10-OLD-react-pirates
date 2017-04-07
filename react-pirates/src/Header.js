@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import logo from './anchor.svg';
+import React, { Component } from 'react'
+import logo from './anchor.svg'
 
 class Header extends Component {
 	render() {
