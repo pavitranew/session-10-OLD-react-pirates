@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './App.css'
+import './css/App.css'
 import Pirate from './Pirate'
 import Header from './Header'
 import PirateForm from './PirateForm'
