@@ -2,150 +2,38 @@
 
 ## Homework
 
-* Spend some quality time with the exercises on [Built with React](http://buildwithreact.com) (do the Tutorial).
-
 ## Reading
 
-* http://exploringjs.com/es6/ (specifically http://exploringjs.com/es6/ch_core-features.html#sec_from-constr-to-class and http://exploringjs.com/es6/ch_classes.html#ch_classes)
-* Book marking the [Create React App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet) notes is also a very good idea. Please skim them.
 
-### Validation Homework
 
-Note the dependencies in package.json.
+Download MS Code - https://code.visualstudio.com
 
-`npm install`
+```
+import avatar from './img/drunkenPirate_avatar.svg'
+```
 
-`npm run boom!`
+```
+return (
+    <div className="pirate">
+      <img src={avatar} />
+      <p>{this.props.tagline}</p>
+    </div>
+  )
+```
 
-Note the classes Angular adds to the input fields as they are manipulated by the user in `static/partials/pirate-list.template.html`
-
-Give the form a name:
-
-`<form ng-submit="addPirate(pirate)" name="addform">`
-
-Disable the submit button:
-
-`<button ng-disabled="addform.$invalid" type="submit">Add Pirate</button>`
-
-Note: you can visually identify the button as being disabled using:
-
-```css
-button[disabled] {
-  background: #bbb;
-  cursor: not-allowed;
-  border: none;
+```
+img {
+  width: 30%;
 }
 ```
 
-https://www.w3schools.com/csSref/playit.asp?filename=playcss_cursor&preval=not-allowed
-
-Give the input a name. Add a paragraph with ng-show conditions.
-
-```html
-<div class="form-group">
-  <label>
-    <input ng-model="$ctrl.pirate.name" required ng-minlength="6" placeholder="Name" name="pname" />
-    <svg viewBox="0 0 20 20" class="icon">
-      <path d="M0 0 L10 10 L0 20"></path>
-    </svg>
-  </label>
-  <p class="error" ng-show="addform.pname.$invalid && addform.pname.$touched"> A name must have at least 6 characters.</p>
-</div>
-```
-
-Note the svg. 
-
-```css
-.error {
-  color: red;
-} 
-
-label {
-  display: flex;
-  height: 2rem;
-}
-
-input {
-  width: 100%;
-  height: 1.6rem;
-  font-size: 1rem;
-  border: none;
-  border-bottom: 1px solid hsl(0%, 0%, 85%);
-  order: 1;
-}
-```
-
-https://www.sitepoint.com/closer-look-svg-path-data/
-
-Ref: this video from [frontend.center](https://www.youtube.com/watch?v=af4ZQJ14yu8).
+`font-family: 'Trade Winds', cursive;`
 
 ```
-input:focus {
-  outline: none;
-  border-color: hsl(0%, 0%, 25%)
-}
-
-.icon {
-  width: 1rem;
-  opacity: 0;
-  transition: all 0.5s;
-  transform: translateX(-100%)
-  // stroke-dasharray: 0, 20;
-  // stroke-dashoffset: -14.642;
-}
-
-.icon path {
-  stroke: black;
-  fill: none;
-  stroke-width: 1px;
-}
-
-input:focus + .icon {
-  opacity: 1;
-  transform: translateX(0)
-  // stroke-dasharray: 28.284, 20;
-  // stroke-dashoffset: 0;
-}
-
-.ng-valid.ng-not-empty {
-  border-color: hsl(166, 72%, 40%)
-}
-
-.ng-invalid.ng-dirty {
-  border-color: hsl(0, 100%, 40%)
-}
-
-```
-
-Using the dash effect:
-
-```
-.icon {
-  width: 1rem;
-  // opacity: 0;
-  transition: all 0.5s;
-  // transform: translateX(-100%)
-  stroke-dasharray: 0, 20;
-  stroke-dashoffset: -14.642;
-}
-
-.icon path {
-  stroke: black;
-  fill: none;
-  stroke-width: 1px;
-}
-
-input:focus + .icon {
-  // opacity: 1;
-  // transform: translateX(0)
-  stroke-dasharray: 28.284, 20;
-  stroke-dashoffset: 0;
+.pirate {
+  font-family: 'Pirata One', cursive;
 }
 ```
-
-
-See https://www.w3schools.com/angular/angular_validation.asp for a complete set of examples for Angular validation.
-
 
 
 ## React Classes
@@ -166,18 +54,6 @@ $ cd react-pirates
 
 ```
 npm run start
-```
-
-Danger- do not do this! Demo only! 
-
-```
-> git init
-> git add .
-> git commit -m 'testing'
-> git branch ejected
-> git checkout ejected
-> npm run eject
-> git status
 ```
 
 Examine package.json
@@ -704,6 +580,147 @@ Pirate.js:
 ```
 
 Load sample pirates.
+
+
+### Validation Homework
+
+Note the dependencies in package.json.
+
+`npm install`
+
+`npm run boom!`
+
+Note the classes Angular adds to the input fields as they are manipulated by the user in `static/partials/pirate-list.template.html`
+
+Give the form a name:
+
+`<form ng-submit="addPirate(pirate)" name="addform">`
+
+Disable the submit button:
+
+`<button ng-disabled="addform.$invalid" type="submit">Add Pirate</button>`
+
+Note: you can visually identify the button as being disabled using:
+
+```css
+button[disabled] {
+  background: #bbb;
+  cursor: not-allowed;
+  border: none;
+}
+```
+
+https://www.w3schools.com/csSref/playit.asp?filename=playcss_cursor&preval=not-allowed
+
+Give the input a name. Add a paragraph with ng-show conditions.
+
+```html
+<div class="form-group">
+  <label>
+    <input ng-model="$ctrl.pirate.name" required ng-minlength="6" placeholder="Name" name="pname" />
+    <svg viewBox="0 0 20 20" class="icon">
+      <path d="M0 0 L10 10 L0 20"></path>
+    </svg>
+  </label>
+  <p class="error" ng-show="addform.pname.$invalid && addform.pname.$touched"> A name must have at least 6 characters.</p>
+</div>
+```
+
+Note the svg. 
+
+```css
+.error {
+  color: red;
+} 
+
+label {
+  display: flex;
+  height: 2rem;
+}
+
+input {
+  width: 100%;
+  height: 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 1px solid hsl(0%, 0%, 85%);
+  order: 1;
+}
+```
+
+https://www.sitepoint.com/closer-look-svg-path-data/
+
+Ref: this video from [frontend.center](https://www.youtube.com/watch?v=af4ZQJ14yu8).
+
+```
+input:focus {
+  outline: none;
+  border-color: hsl(0%, 0%, 25%)
+}
+
+.icon {
+  width: 1rem;
+  opacity: 0;
+  transition: all 0.5s;
+  transform: translateX(-100%)
+  // stroke-dasharray: 0, 20;
+  // stroke-dashoffset: -14.642;
+}
+
+.icon path {
+  stroke: black;
+  fill: none;
+  stroke-width: 1px;
+}
+
+input:focus + .icon {
+  opacity: 1;
+  transform: translateX(0)
+  // stroke-dasharray: 28.284, 20;
+  // stroke-dashoffset: 0;
+}
+
+.ng-valid.ng-not-empty {
+  border-color: hsl(166, 72%, 40%)
+}
+
+.ng-invalid.ng-dirty {
+  border-color: hsl(0, 100%, 40%)
+}
+
+```
+
+Using the dash effect:
+
+```
+.icon {
+  width: 1rem;
+  // opacity: 0;
+  transition: all 0.5s;
+  // transform: translateX(-100%)
+  stroke-dasharray: 0, 20;
+  stroke-dashoffset: -14.642;
+}
+
+.icon path {
+  stroke: black;
+  fill: none;
+  stroke-width: 1px;
+}
+
+input:focus + .icon {
+  // opacity: 1;
+  // transform: translateX(0)
+  stroke-dasharray: 28.284, 20;
+  stroke-dashoffset: 0;
+}
+```
+
+
+See https://www.w3schools.com/angular/angular_validation.asp for a complete set of examples for Angular validation.
+
+
+
 
 
 

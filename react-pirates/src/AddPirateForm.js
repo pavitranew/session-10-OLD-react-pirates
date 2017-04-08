@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './css/AddPirateForm.css'
 
 class AddPirateForm extends Component {
 

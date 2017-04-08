@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import './css/Pirate.css'
 
 class Pirate extends Component {
   render() {
     return (
-    		<p>{this.props.tagline}</p>
+    		<h3>{this.props.tagline}</h3>
     	)
   }
 }
