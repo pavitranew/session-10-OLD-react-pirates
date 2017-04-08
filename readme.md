@@ -36,31 +36,47 @@ img {
 ```
 
 
-## React Classes
+From Pirate.js
+
+JSON.stringify(<data-that-you-want-to-stringify>,<replacer-function-null>,<indentation>)
+
+import preload from './sample-pirates'
+
+render(){
+  const {details} = this.props;
+  return (
+    <div className="pirate">
+    <pre><code>{ JSON.stringify(preload, null, 4)}</code></pre>
+    <ul>
+      <li>{details.name}</li>
+      <li>{details.weapon}</li>
+      <li>{details.vessel}</li>
+    </ul>
+    </div>
+    )
+  }
+
+
+Need an ng-repeat to make panels
+
+array.map(<function that applies to each item in the array>) to components
+
+Double numbers:
 
 ```
-$ sudo npm install -g create-react-app
+> var numbers = [1,5,8]
+> numbers
+> numbers.map(function(number){return number * 2})
+> var double = function(number){return number * 2}
+> double(5)
+> numbers.map(double)
 ```
 
-See also: [Create Angular App](https://cli.angular.io)
+Use a max-height for Pirate with overflow scroll
 
-```
-$ sudo create-react-app react-pirates
-```
+/////////////
 
-```
-$ cd react-pirates
-```
-
-```
-npm run start
-```
-
-Examine package.json
-
-### App.js
-
-What appears to be HTML is JSX.
+### JSX
 
 1. logo: {logo}: JSX
 2. App.css: injected via Webpack:`<style>`
@@ -68,7 +84,7 @@ What appears to be HTML is JSX.
 4. xhtml style closing tags: JSX
 5. style="color: purple" → style={{color: 'purple'}}: JSX
 
-Add outside the App div:
+Nesting:
 
 `<p>test</p>`
 
@@ -78,53 +94,7 @@ Comments:
 
 `{ /* comment */ }` see http://wesbos.com/react-jsx-comments/
 
-
-## Additional Installs
-
-1. [React developer tools for Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-2. [Package Control: Babel](https://packagecontrol.io/packages/Babel)
-
-
-App.js:
-
-`import logo from './anchor.svg';`
-
-`<h2>Pirate List</h2>`
-
-App.css:
-
-```
-.App-header {
-  background-color: #eee;
-  height: 150px;
-  padding: 20px;
-  color: #333;
-}
-```
-
-### Components
-
-Pirate.js
-
-```
-import React, { Component } from 'react';
-
-class Pirate extends React.Component {
-  render(){
-    return (
-      <p>Pirate Component</p>
-      )
-  }
-}
-
-export default Pirate;
-```
-
-App.js
-
-```
-import Pirate from './Pirate';
-```
+### props
 
 ```
 <Pirate tagline="Ahoy there Matey!" />
@@ -148,26 +118,6 @@ Select <Pirate />
 
 `$r.props`
 
-Exercise - creating another component
-
-```
-import React, { Component } from 'react';
-import logo from './anchor.svg';
-
-class Header extends React.Component {
-  render(){
-    return (
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Pirate List</h2>
-      </div>)
-    }
-  }
-
-export default Header;
-```
-
-`import Header from './Header';`
 
 ## Adding Pirates
 
@@ -327,7 +277,7 @@ App.js:
   }
 ```
 
-note - bind() - creates a new function that, when called, has its `this` keyword set to the provided value.
+Note - bind() - creates a new function that, when called, has its `this` keyword set to the provided value.
 
 ```
 var foo = {
@@ -352,18 +302,15 @@ Pass the prop down to PirateForm:
 `<PirateForm addPirate={this.addPirate} />`:  
 
 ```
-return (
+  render() {
+    return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Pirate List</h2>
-        </div>
-        <ul>
-          <Pirate />
-        </ul>
-        <PirateForm addPirate={this.addPirate} />
+      <Header />
+      <Pirate tagline="Ahoy there matey!" />
+      <PirateForm addPirate={this.addPirate} />
       </div>
-    );
+      );
+  }
 ```
 
 Examine PirateForm props
@@ -375,11 +322,11 @@ PirateForm:
 `<AddPirateForm addPirate={this.props.addPirate} />`:
 
 ```
-  render(){
+  render() {
     return (
-      <div>
-      <h3>Pirate Forms</h3>
-      <AddPirateForm addPirate={this.props.addPirate} />
+      <div className="pirate-form">
+        <h3>Pirate Forms</h3>
+        <AddPirateForm addPirate={this.props.addPirate} />
       </div>
       )
   }
@@ -408,7 +355,7 @@ AddPirateForm:
 
 Empty the form with a ref.
 
-`<form ref={(input)=>this.pirateForm = input } onSubmit={(e) => this.createPirate(e)}>`:
+`<form ref={ (input)=>this.pirateForm = input } onSubmit={(e) => this.createPirate(e)}>`:
 
 ```
     return (
@@ -436,6 +383,94 @@ createPirate(event) {
     this.pirateForm.reset();
   }
 ```
+
+//////// show a single pirate
+
+App.js:
+
+```
+<ul>
+  <Pirate />
+</ul>
+```
+
+Pirate.js:
+
+```
+import React, { Component } from 'react';
+
+class Pirate extends React.Component {
+
+  render(){
+    return (
+      <ul>
+        <li>Pirate</li>
+      </ul>
+      )
+  }
+}
+
+export default Pirate;
+```
+
+Unlike Angular there are no built in loops, repeats etc. You must use regular JS.
+
+Here - cannot use .map which is for Arrays.
+
+Use `Object.keys()`
+
+Find App component in React tool. In console: `$r.state.pirates`
+
+Load samples and run again to see data. Can't loop over that!
+
+`Object.keys($r.state.pirates)`
+
+App.js:
+
+`{Object.keys(this.state.pirates)}`
+
+```
+return (
+  <div className="App">
+    <div className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+      <h2>Pirate List</h2>
+    </div>
+    <div class="pirateList">
+    {Object.keys(this.state.pirates)}
+    </div>
+    <PirateForm addPirate={this.addPirate} loadSamples={this.loadSamples} />
+  </div>
+);
+```
+
+
+
+```
+<ul>
+{
+  Object
+  .keys(this.state.pirates)
+  .map( key => <Pirate key={key} details={this.state.pirates[key]} /> )
+}
+</ul>
+```
+
+Pirate.js:
+
+```
+  render(){
+    const {details} = this.props;
+    return (
+      <ul>
+        <li>{details.name}</li>
+        <li>{details.weapon}</li>
+        <li>{details.vessel}</li>
+      </ul>
+      )
+  }
+```
+
 
 ### Load sample data into state
 
@@ -480,18 +515,19 @@ App.js
 `<PirateForm addPirate={this.addPirate} loadSamples={this.loadSamples} />`:
 
 ```
-return (
-  <div className="App">
-    <div className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h2>Pirate List</h2>
-    </div>
-    <ul>
-      <Pirate />
-    </ul>
-    <PirateForm addPirate={this.addPirate} loadSamples={this.loadSamples} />
-  </div>
-);
+    return (
+      <div className="App">
+      <Header />
+      <div class="pirateList">
+      {
+        Object
+        .keys(this.state.pirates)
+        .map( key => <Pirate key={key} details={this.state.pirates[key]} /> )
+      }
+      </div>
+      <PirateForm addPirate={this.addPirate} />
+      </div>
+      )
 ```
 
 Loading the pirates
@@ -580,6 +616,7 @@ Pirate.js:
 ```
 
 Load sample pirates.
+
 
 
 ### Validation Homework
