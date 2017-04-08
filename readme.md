@@ -40,13 +40,13 @@ From Pirate.js
 
 JSON.stringify(<data-that-you-want-to-stringify>,<replacer-function-null>,<indentation>)
 
-import preload from './sample-pirates'
+import piratesFile from './sample-pirates'
 
 render(){
   const {details} = this.props;
   return (
     <div className="pirate">
-    <pre><code>{ JSON.stringify(preload, null, 4)}</code></pre>
+    <pre><code>{ JSON.stringify(piratesFile, null, 4)}</code></pre>
     <ul>
       <li>{details.name}</li>
       <li>{details.weapon}</li>
@@ -72,6 +72,16 @@ Double numbers:
 > numbers.map(double)
 ```
 
+`<pre><code>{ JSON.stringify(piratesFile, null, 4)}</code></pre>`
+
+```
+{piratesFile.pirates.map(function(pirate){
+  return (
+    <h3>{pirate.name}</h3>
+  )
+})}
+```
+
 Use a max-height for Pirate with overflow scroll
 
 /////////////
@@ -79,10 +89,11 @@ Use a max-height for Pirate with overflow scroll
 ### JSX
 
 1. logo: {logo}: JSX
-2. App.css: injected via Webpack:`<style>`
 3. class → className: JSX
 4. xhtml style closing tags: JSX
 5. style="color: purple" → style={{color: 'purple'}}: JSX
+
+Note: css: injected via Webpack:`<style>`
 
 Nesting:
 
@@ -100,15 +111,13 @@ Comments:
 <Pirate tagline="Ahoy there Matey!" />
 ```
 
-Pirate.js
+Pirate.js:
 
 ```
 <p>{this.props.tagline}</p>
 ```
 
 Inspect using React tool.
-
-#### React dev tools
 
 `$0`
 
@@ -119,86 +128,34 @@ Select <Pirate />
 `$r.props`
 
 
-## Adding Pirates
+### Adding Pirates
 
-New component: PirateForm.js:
+PirateForm.js:
 
 `import samplePirates from './sample-pirates';`
 
-```
-import React, { Component } from 'react';
-import AddPirateForm from './AddPirateForm';
 
-class PirateForm extends React.Component {
-  render(){
-    return (
-      <div>
-      <h3>Pirate Forms</h3>
-      <AddPirateForm />
-      </div>
-      )
+
+###State / Data binding
+
+In AddPirateForm.js method - createPirate()
+
+In AddPirateForm created the pirate const variable:
+
+```
+  createPirate(event){
+    event.preventDefault()
+    console.log('making a pirate')
+    const pirate = {
+      name: this.name.value,
+      vessel: this.vessel.value,
+      weapon: this.weapon.value
+    }
+    console.log(pirate)
   }
-}
-
-export default PirateForm;
 ```
 
-App.js
-
-```
-import PirateForm from './PirateForm';
-```
-
-State / Data binding
-
-AddPirateForm.js
-
-```
-import React, { Component } from 'react';
-
-class AddPirateForm extends React.Component {
-  render(){
-    return (
-      <form>
-      <input type="text" placeholder="Pirate name" />
-      <input type="text" placeholder="Pirate vessel" />
-      <input type="text" placeholder="Pirate weapon" />
-      <button type="submit">Add Pirate</button>
-      </form>
-      )
-  }
-}
-
-export default AddPirateForm;
-```
-
-Method - createPirate
-
-`<form onSubmit={(e) => this.createPirate(e)}>`:
-
-```
-    return (
-      <form onSubmit={(e) => this.createPirate(e)}>
-      <input type="text" placeholder="Pirate name" />
-      <input type="text" placeholder="Pirate vessel" />
-      <input type="text" placeholder="Pirate weapon" />
-      <button type="submit">Add Pirate</button>
-      </form>
-      )
-```
-
-In AddPirateForm (above render):
-
-```
-createPirate(event) {
-  event.preventDefault();
-  console.log('make a pirate')
-}
-```
-
-Test
-
-Add refs to the form to store references to the input:
+Added refs to the form to store references to the input:
 
 ```
 <form onSubmit={(e) => this.createPirate(e)}>
@@ -211,30 +168,12 @@ Add refs to the form to store references to the input:
 
 Go to React dev tools, find AddPirateForm component, $r in the console to see the inputs.
 
-Create the pirate const variable
 
-AddPirateForm:
-
-```
-  createPirate(event) {
-    event.preventDefault();
-    console.log('make a pirate');
-    const pirate = {
-      name: this.name.value,
-      vessel: this.vessel.value,
-      weapon: this.weapon.value,
-    }
-    console.log(pirate)
-  }
-```
-
-Test.
-
-Get the pirate object into state. 
+### Get the pirate object into state. 
 
 The key difference between props and state is that state is internal and controlled by the component itself while props are external and controlled by whatever renders the component. - [ref](http://buildwithreact.com/tutorial/state)
 
-App.js:
+We started with App.js:
 
 ```
 class App extends Component {
@@ -249,19 +188,24 @@ class App extends Component {
 
 React tools, find App, view state.
 
-App.js:
+And added to App.js:
 
 ```
   addPirate(pirate){
     //update state
     const pirates = {...this.state.pirates}
     //add new pirate
-    const timestamp = Date.now();
-    pirates[`pirate-${timestamp}`] = pirate;
+    const timestamp = Date.now()
+    pirates[`pirate-${timestamp}`] = pirate
     //set state
     this.setState({ pirates: pirates })
   }
 ```
+
+See:
+
+`reference / spread-operator.html`
+
 
 Bind the add form to our app.
 
@@ -277,19 +221,21 @@ App.js:
   }
 ```
 
+See:
+
+`reference / extending-classes.html`
+
 Note - bind() - creates a new function that, when called, has its `this` keyword set to the provided value.
 
-```
-var foo = {
-    x: 3
-}
-var bar = function(){
-    console.log(this.x);
-}
-bar(); // undefined
-var boundFunc = bar.bind(foo);
-boundFunc(); // 3
-```
+See: 
+
+`reference / bind / index.html`
+
+`reference / bind / button.html`
+
+
+
+
 
 Test with: 
 
@@ -297,7 +243,9 @@ $r.addPirate({name: 'joe'})
 
 Make the addPirate function available to components with props.
 
-Pass the prop down to PirateForm:
+### Passing the prop down 
+
+To PirateForm from App.js:
 
 `<PirateForm addPirate={this.addPirate} />`:  
 
@@ -317,7 +265,7 @@ Examine PirateForm props
 
 Only one level more! Pass the prop to AddPirateForm.
 
-PirateForm:
+In PirateForm.js:
 
 `<AddPirateForm addPirate={this.props.addPirate} />`:
 
