@@ -5,61 +5,54 @@
 ## Reading
 
 
+```
+$ cd <react-pirates>
+$ subl . 
+```
+
+.gitignore
+
+```
+$ git init
+$git branch dev
+$git checkout dev
+$ npm install 
+$ npm run start
+```
 
 Download MS Code - https://code.visualstudio.com
 
-```
-import avatar from './img/drunkenPirate_avatar.svg'
-```
-
-```
-return (
-    <div className="pirate">
-      <img src={avatar} />
-      <p>{this.props.tagline}</p>
-    </div>
-  )
-```
-
-```
-img {
-  width: 30%;
-}
-```
-
-`font-family: 'Trade Winds', cursive;`
-
-```
-.pirate {
-  font-family: 'Pirata One', cursive;
-}
-```
-
-
-
-
-/////////////
-
 ### JSX
+
+App.js > Header.js:
 
 1. logo: {logo}: JSX
 3. class → className: JSX
 4. xhtml style closing tags: JSX
-5. style="color: purple" → style={{color: 'purple'}}: JSX
 
-Note: css: injected via Webpack:`<style>`
+Examine CSS: 
+
+1. injected via Webpack:`<style>`
+2. multiple `<style>` tags (advantages?)
+3. note prefixing in output
 
 Nesting:
 
-`<p>test</p>`
-
-Note - to use Emmet run - `ctrl-e`
+Add `<p>test</p>` above div in Header.js
 
 Comments:
 
-`{ /* comment */ }` see http://wesbos.com/react-jsx-comments/
+`{/* <img src={logo} className="logo" alt="logo" /> */}` 
+
+Demo: jc + TAB
+
+See http://wesbos.com/react-jsx-comments/
+
+Note - to use Emmet run - `ctrl-e`
 
 ### props
+
+App.js:
 
 ```
 <Pirate tagline="Ahoy there Matey!" />
@@ -71,30 +64,30 @@ Pirate.js:
 <p>{this.props.tagline}</p>
 ```
 
-Inspect using React tool.
+### React tool
 
-`$0`
+Native: `$0`
 
-`$r`
+React: `$r`
 
 Select <Pirate />
 
-`$r.props`
+Console: `$r.props`
 
 
-### Adding Pirates
+<!-- ### Adding Pirates
 
 PirateForm.js:
 
-`import samplePirates from './sample-pirates';`
+`import samplePirates from './sample-pirates';` -->
 
 
 
-###State / Data binding
+### State / Data binding
 
-In AddPirateForm.js method - createPirate()
+In AddPirateForm.js we created a method - createPirate()
 
-In AddPirateForm created the pirate const variable:
+And within, a pirate variable:
 
 ```
   createPirate(event){
@@ -109,7 +102,9 @@ In AddPirateForm created the pirate const variable:
   }
 ```
 
-Added refs to the form to store references to the input:
+Added [refs](https://facebook.github.io/react/docs/refs-and-the-dom.html) to the form to store references to the input.
+
+When we submit we need to put the contents of the form into our const pirate object.
 
 ```
 <form onSubmit={(e) => this.createPirate(e)}>
@@ -125,7 +120,7 @@ Go to React dev tools, find AddPirateForm component, $r in the console to see th
 
 ### Get the pirate object into state. 
 
-The key difference between props and state is that state is internal and controlled by the component itself while props are external and controlled by whatever renders the component. - [ref](http://buildwithreact.com/tutorial/state)
+The key difference between props and state is that state is internal and controlled by the component itself, while props are external and controlled by whatever renders the component. - [ref](http://buildwithreact.com/tutorial/state)
 
 We started with App.js:
 
@@ -156,7 +151,7 @@ And added to App.js:
   }
 ```
 
-See:
+For spread operator see:
 
 `reference / spread-operator.html`
 
@@ -175,7 +170,9 @@ App.js:
   }
 ```
 
-See:
+#### Review
+
+Review super in classes:
 
 `reference / extending-classes.html`
 
@@ -188,20 +185,19 @@ See:
 `reference / bind / button.html`
 
 
+### State
 
-
-Test with: 
-
-App
+Test with App in React tool:
 
 $r.addPirate({name: 'joe'})
 
 
+///// End Review
 
-Make the addPirate function available to components with props.
 
+### Passing Props
 
-### Passing the prop down 
+We need to make the addPirate function available to AddPirateForm with props.
 
 To PirateForm from App.js:
 
