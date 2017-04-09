@@ -36,53 +36,7 @@ img {
 ```
 
 
-From Pirate.js
 
-JSON.stringify(<data-that-you-want-to-stringify>,<replacer-function-null>,<indentation>)
-
-import piratesFile from './sample-pirates'
-
-render(){
-  const {details} = this.props;
-  return (
-    <div className="pirate">
-    <pre><code>{ JSON.stringify(piratesFile, null, 4)}</code></pre>
-    <ul>
-      <li>{details.name}</li>
-      <li>{details.weapon}</li>
-      <li>{details.vessel}</li>
-    </ul>
-    </div>
-    )
-  }
-
-
-Need an ng-repeat to make panels
-
-array.map(<function that applies to each item in the array>) to components
-
-Double numbers:
-
-```
-> var numbers = [1,5,8]
-> numbers
-> numbers.map(function(number){return number * 2})
-> var double = function(number){return number * 2}
-> double(5)
-> numbers.map(double)
-```
-
-`<pre><code>{ JSON.stringify(piratesFile, null, 4)}</code></pre>`
-
-```
-{piratesFile.pirates.map(function(pirate){
-  return (
-    <h3>{pirate.name}</h3>
-  )
-})}
-```
-
-Use a max-height for Pirate with overflow scroll
 
 /////////////
 
@@ -236,12 +190,16 @@ See:
 
 
 
-
 Test with: 
+
+App
 
 $r.addPirate({name: 'joe'})
 
+
+
 Make the addPirate function available to components with props.
+
 
 ### Passing the prop down 
 
@@ -261,7 +219,7 @@ To PirateForm from App.js:
   }
 ```
 
-Examine PirateForm props
+(Examine PirateForm props in React tool.)
 
 Only one level more! Pass the prop to AddPirateForm.
 
@@ -320,21 +278,21 @@ and `this.pirateForm.reset();`:
 
 ```
 createPirate(event) {
-    event.preventDefault();
-    console.log('make a pirate');
+    event.preventDefault()
+    console.log('make a pirate')
     const pirate = {
       name: this.name.value,
       vessel: this.vessel.value,
       weapon: this.weapon.value,
     }
-    this.props.addPirate(pirate);
-    this.pirateForm.reset();
+    this.props.addPirate(pirate)
+    this.pirateForm.reset()
   }
 ```
 
 //////// show a single pirate
 
-App.js:
+App.js: ???????????
 
 ```
 <ul>
@@ -345,10 +303,10 @@ App.js:
 Pirate.js:
 
 ```
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import './css/Pirate.css'
 
 class Pirate extends React.Component {
-
   render(){
     return (
       <ul>
@@ -361,9 +319,92 @@ class Pirate extends React.Component {
 export default Pirate;
 ```
 
-Unlike Angular there are no built in loops, repeats etc. You must use regular JS.
+Unlike Angular there are no built in loops, repeats etc. You must use regular JS. We need a replacement for ng-repeat to make pirate components.
 
-Here - cannot use .map which is for Arrays.
+
+/////
+
+### Using a JSON Array
+
+JSON.stringify(<data-that-you-want-to-stringify>,<replacer-function-null>,<indentation>)
+
+Examine sample json file. Make a folder called `data` in `src`.
+
+Pirate.js:
+
+`import piratesFile from './data/sample-pirates'`:
+`<pre><code>{ JSON.stringify(piratesFile, null, 4)}</code></pre>`:
+
+```
+import React, { Component } from 'react'
+import './css/Pirate.css'
+import piratesFile from './data/sample-pirates'
+
+class Pirate extends React.Component {
+  render(){
+    return (
+      <ul>
+        <li>
+          <pre><code>{ JSON.stringify(piratesFile, null, 4)}</code></pre>
+        </li>
+      </ul>
+      )
+  }
+}
+
+export default Pirate;
+```
+
+With an Array:
+
+array.map(<function that applies to each item in the array>) to create components
+
+Example: Doubling numbers:
+
+```
+> var numbers = [1,5,8]
+> numbers
+> numbers.map(function(number){return number * 2})
+> var double = function(number){return number * 2}
+> double(5)
+> numbers.map(double)
+```
+
+Pirate.js:
+
+```
+render(){
+  return (
+    <ul>
+        {piratesFile.pirates.map(function(pirate){
+          return (
+            <li>
+            <h3>{pirate.name}</h3>
+            </li>
+          )
+        })}
+    </ul>
+    )
+}
+```
+
+Use a max-height for Pirate with overflow scroll?
+
+/////
+
+Switch the json out for the .js version of samples and rollback to:
+
+```
+<ul>
+  <li>Pirate</li>
+</ul>
+```
+
+
+For the other version of sample-pirates we cannot use .map which is for Arrays.
+
+///// This adds a pirate via the form!?
+
 
 Use `Object.keys()`
 
@@ -380,10 +421,7 @@ App.js:
 ```
 return (
   <div className="App">
-    <div className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h2>Pirate List</h2>
-    </div>
+    <Header />
     <div class="pirateList">
     {Object.keys(this.state.pirates)}
     </div>
@@ -427,32 +465,32 @@ PirateForm:
 `<button onClick={this.loadSamples}>Load Sample Pirates</button>`:
 
 ```
-    return (
-      <div>
-      <h3>Pirate Forms</h3>
-      <AddPirateForm addPirate={this.props.addPirate} />
-      <button onClick={this.props.loadSamples}>Load Sample Pirates</button>
-      </div>
-      )
+return (
+  <div>
+  <h3>Pirate Forms</h3>
+  <AddPirateForm addPirate={this.props.addPirate} />
+  <button onClick={this.props.loadSamples}>Load Sample Pirates</button>
+  </div>
+  )
 ```
 
 App.js
 
-`import samplePirates from './sample-pirates'`
+`import piratesFile from './sample-pirates'`
 
 ```
-  loadSamples(){
-    this.setState({
-      pirates: samplePirates
-    })
-  }
+loadSamples(){
+  this.setState({
+    pirates: piratesFile
+  })
+}
 ```
 
 ```
   constructor() {
     super();
-    this.addPirate = this.addPirate.bind(this);
-    this.loadSamples = this.loadSamples.bind(this);
+    this.addPirate = this.addPirate.bind(this)
+    this.loadSamples = this.loadSamples.bind(this)
     this.state = {
       pirates: {}
     }
@@ -466,13 +504,11 @@ App.js
     return (
       <div className="App">
       <Header />
-      <div class="pirateList">
       {
         Object
         .keys(this.state.pirates)
         .map( key => <Pirate key={key} details={this.state.pirates[key]} /> )
       }
-      </div>
       <PirateForm addPirate={this.addPirate} />
       </div>
       )
@@ -506,6 +542,96 @@ class Pirate extends React.Component {
 
 export default Pirate;
 ```
+
+
+///// remove pirate
+
+New function in App:
+
+```
+  removePirate(key){
+    const pirates = {...this.state.pirates}
+    delete pirates[key]
+    this.setState({pirates})
+  }
+```
+
+<!-- Do not use yet:
+
+```
+  removePirate(key){
+    const pirates = {...this.state.pirates}
+    pirates[key] = null // note re: db insert null
+    this.setState({pirates})
+  }
+``` -->
+
+Constructor in App:
+
+```
+this.removePirate = this.removePirate.bind(this);
+```
+
+$r (App)
+
+```
+$r.removePirate('pirate1')
+```
+
+On Pirate in App `removePirate = {this.removePirate}`:
+
+```
+{
+  Object
+  .keys(this.state.pirates)
+  .map( key => <Pirate key={key} 
+    index={key}
+    details={this.state.pirates[key]} 
+    removePirate={this.removePirate} /> )
+}
+```
+
+Test with one pirate (pirate1).
+
+PirateForm `<button onClick={() => this.props.removePirate('pirate1')}>RemovePirate</button>`
+
+```
+    return (
+      <ul>
+        <li>{details.name}</li>
+        <li>{details.weapon}</li>
+        <li>{details.vessel}</li>
+        <button onClick={() => this.props.removePirate('pirate1')}>RemovePirate</button>
+      </ul>
+      )
+```
+
+You cannot access the key inside a component
+
+Pass it along `index={key}` in App:
+
+```
+{
+  Object
+  .keys(this.state.pirates)
+  .map( key => <Pirate key={key} 
+    index={key}
+    details={this.state.pirates[key]} 
+    removePirate={this.removePirate} /> )
+}
+```
+
+```
+return (
+  <ul>
+    <li>{details.name}</li>
+    <li>{details.weapon}</li>
+    <li>{details.vessel}</li>
+    <button onClick={() => this.props.removePirate(this.props.index)}>RemovePirate</button>
+  </ul>
+  )
+```
+
 
 Unlike Angular there are no built in loops, repeats etc. You must use regular JS.
 
