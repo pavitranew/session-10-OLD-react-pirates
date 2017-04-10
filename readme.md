@@ -286,15 +286,7 @@ createPirate(event) {
   }
 ```
 
-//////// show a single pirate
-
-App.js: ???????????
-
-```
-<ul>
-  <Pirate />
-</ul>
-```
+//////// Create a single pirate
 
 Pirate.js:
 
@@ -317,18 +309,18 @@ export default Pirate;
 
 Unlike Angular there are no built in loops, repeats etc. You must use regular JS. We need a replacement for ng-repeat to make pirate components.
 
+### Sample Pirates
 
-/////
-
-### Using a JSON Array
-
-JSON.stringify(<data-that-you-want-to-stringify>,<replacer-function-null>,<indentation>)
+1: Using a JSON Array
 
 Examine sample json file. Make a folder called `data` in `src`.
+
+JSON.stringify(<data-that-you-want-to-stringify>,<replacer-function-null>,<indentation>)
 
 Pirate.js:
 
 `import piratesFile from './data/sample-pirates'`:
+
 `<pre><code>{ JSON.stringify(piratesFile, null, 4)}</code></pre>`:
 
 ```
@@ -351,7 +343,7 @@ class Pirate extends React.Component {
 export default Pirate;
 ```
 
-With an Array:
+With Array.map():
 
 array.map(<function that applies to each item in the array>) to create components
 
@@ -384,11 +376,9 @@ render(){
 }
 ```
 
-Use a max-height for Pirate with overflow scroll?
+2: With an Object
 
-/////
-
-Switch the json out for the .js version of samples and rollback to:
+Switch the json out for the .js version of samples, remove the import (`import piratesFile from './data/sample-pirates'`) and rollback to:
 
 ```
 <ul>
@@ -396,23 +386,29 @@ Switch the json out for the .js version of samples and rollback to:
 </ul>
 ```
 
+App.js
 
-For the other version of sample-pirates we cannot use .map which is for Arrays.
+```
+import piratesFile from './data/sample-pirates'
+```
 
-///// This adds a pirate via the form!?
+Examine with console.log().
 
+For this version of sample-pirates we cannot easily use .map which is for Arrays.
 
 Use `Object.keys()`
 
-Find App component in React tool. In console: `$r.state.pirates`
+Find App component in React tool. 
 
-Load samples and run again to see data. Can't loop over that!
+In console: `> $r.state.pirates`
 
-`Object.keys($r.state.pirates)`
+Load samples and run again to see data. An object. Can't use map()?
+
+`> Object.keys($r.state.pirates)`
 
 App.js:
 
-`{Object.keys(this.state.pirates)}`
+`{Object.keys(this.state.pirates)}` :
 
 ```
 return (
@@ -426,7 +422,7 @@ return (
 );
 ```
 
-
+Now that we have an Array:
 
 ```
 <ul>
@@ -442,6 +438,18 @@ Pirate.js:
 
 ```
   render(){
+    return (
+      <ul>
+        <li>{this.props.details.name}</li>
+      </ul>
+      )
+  }
+```
+
+Simplify:
+
+```
+  render(){
     const {details} = this.props;
     return (
       <ul>
@@ -454,11 +462,11 @@ Pirate.js:
 ```
 
 
-### Load sample data into state
+### Load sample data via PirateForm
 
 PirateForm:
 
-`<button onClick={this.loadSamples}>Load Sample Pirates</button>`:
+`<button onClick={this.props.loadSamples}>Load Sample Pirates</button>`:
 
 ```
 return (
@@ -472,7 +480,7 @@ return (
 
 App.js
 
-`import piratesFile from './sample-pirates'`
+We've alreay imported: `import piratesFile from './sample-pirates'`
 
 ```
 loadSamples(){
@@ -493,6 +501,16 @@ loadSamples(){
   }
 ```
 
+We can use the button in App.js:
+
+```
+<button onClick={this.loadSamples}>Load Sample Pirates</button>
+
+```
+
+Delete and try in PirateForm.
+
+Add to props:
 
 `<PirateForm addPirate={this.addPirate} loadSamples={this.loadSamples} />`:
 
@@ -510,57 +528,18 @@ loadSamples(){
       )
 ```
 
-Loading the pirates
 
-App.js:
-
-```
-<ul>
-  <Pirate />
-</ul>
-```
-
-Pirate.js:
-
-```
-import React, { Component } from 'react';
-
-class Pirate extends React.Component {
-
-  render(){
-    return (
-      <li>
-        <p>Pirate</p>
-      </li>
-      )
-  }
-}
-
-export default Pirate;
-```
-
-
-///// remove pirate
+### Remove Pirate
 
 New function in App:
 
 ```
-  removePirate(key){
-    const pirates = {...this.state.pirates}
-    delete pirates[key]
-    this.setState({pirates})
-  }
+removePirate(key){
+  const pirates = {...this.state.pirates}
+  delete pirates[key]
+  this.setState({pirates})
+}
 ```
-
-<!-- Do not use yet:
-
-```
-  removePirate(key){
-    const pirates = {...this.state.pirates}
-    pirates[key] = null // note re: db insert null
-    this.setState({pirates})
-  }
-``` -->
 
 Constructor in App:
 
@@ -589,7 +568,20 @@ On Pirate in App `removePirate = {this.removePirate}`:
 
 Test with one pirate (pirate1).
 
-PirateForm `<button onClick={() => this.props.removePirate('pirate1')}>RemovePirate</button>`
+PirateForm:
+
+`<button onClick={() => this.props.removePirate('pirate1')}>RemovePirate</button>`
+
+```
+<PirateForm 
+addPirate={this.addPirate} 
+removePirate={this.removePirate} 
+loadSamples={this.loadSamples} />
+```
+
+Try it on the individual pirates.
+
+Pirate.js:
 
 ```
     return (
@@ -617,6 +609,8 @@ Pass it along `index={key}` in App:
 }
 ```
 
+Pirate.js:
+
 ```
 return (
   <ul>
@@ -628,64 +622,117 @@ return (
   )
 ```
 
+### Persisting the Data
 
-Unlike Angular there are no built in loops, repeats etc. You must use regular JS.
+Create an account at https://firebase.google.com/
 
-Here - cannot use .map which is for Arrays.
+Create a new project called firstname-lastname-pirates
 
-Use `Object.keys()`
+Go to the empty databse (left hand menu)
 
-Find App component in React tool. In console: `$r.state.pirates`
-
-Load samples and run again to see data. Can't loop over that!
-
-`Object.keys($r.state.pirates)`
-
-App.js:
-
-`{Object.keys(this.state.pirates)}`
+Go to rules:
 
 ```
-return (
-  <div className="App">
-    <div className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h2>Pirate List</h2>
-    </div>
-    <ul>
-    {Object.keys(this.state.pirates)}
-    </ul>
-    <PirateForm addPirate={this.addPirate} loadSamples={this.loadSamples} />
-  </div>
-);
-```
-
-```
-<ul>
 {
-  Object
-  .keys(this.state.pirates)
-  .map( key => <Pirate key={key} details={this.state.pirates[key]} /> )
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
 }
-</ul>
 ```
 
-Pirate.js:
+```
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+```
+
+and Publish.
+
+App.js state.
+
+in src create `base.js`
 
 ```
-  render(){
-    const {details} = this.props;
-    return (
-      <li>
-        <h4>{details.name}</h4>
-        <p>{details.weapon}</p>
-        <p>{details.vessel}</p>
-      </li>
-      )
+import Rebase from 're-base'
+
+const base = Rebase.createClass({
+  
+})
+```
+
+npm install rebase.
+
+Add domain, database URL, API key.
+
+In Firebase click on Overview > Add Firebase to your webapp
+
+We need:
+
+```
+apiKey: "AIzaSyAHnKw63CUBAqSuCREgils_waYJ0qwpGiU",
+authDomain: "daniel-deverell-pirates.firebaseapp.com",
+databaseURL: "https://daniel-deverell-pirates.firebaseio.com",
+```
+
+
+```
+import Rebase from 're-base'
+
+const base = Rebase.createClass({
+  apiKey: "AIzaSyAHnKw63CUBAqSuCREgils_waYJ0qwpGiU",
+  authDomain: "daniel-deverell-pirates.firebaseapp.com",
+  databaseURL: "https://daniel-deverell-pirates.firebaseio.com",
+})
+
+export default base
+```
+
+Import into App.js
+
+`import base from './base'`
+
+Component Lifecycle: component will mount
+
+```
+componentWillMount(){
+  this.ref = base.syncState(``)
+}
+```
+
+```
+componentWillMount(){
+  this.ref = base.syncState(`daniel-deverell-pirates/pirates`, {
+    context: this,
+    state: 'pirates'
+  })
+}
+```
+
+```
+componentWillUmount(){
+  base.removeBinding(this.ref)
+}
+```
+
+Load pirates and examine the Firebase HTML5 websockets
+
+To delete a pirate we need to accomodate Firebase:
+
+```
+  removePirate(key){
+    const pirates = {...this.state.pirates}
+    pirates[key] = null
+    this.setState({pirates})
   }
 ```
 
-Load sample pirates.
+### Routing
+
+`> npm install react-router --save`
 
 
 
@@ -832,6 +879,7 @@ See https://www.w3schools.com/angular/angular_validation.asp for a complete set 
 
 
 ### Notes
+
 
 
 
