@@ -2,6 +2,8 @@
 
 ## Homework
 
+Review session Ten notes. Use the additional data in sample-pirates.js in Pirate.js including the pirate avatar image.
+
 ## Reading
 
 
@@ -683,7 +685,7 @@ const base = Rebase.createClass({
 })
 ```
 
-npm install rebase.
+`$ npm install rebase --save`
 
 Add domain, database URL, API key.
 
@@ -718,12 +720,6 @@ Component Lifecycle: component will mount
 
 ```
 componentWillMount(){
-  this.ref = base.syncState(``)
-}
-```
-
-```
-componentWillMount(){
   this.ref = base.syncState(`daniel-deverell-pirates/pirates`, {
     context: this,
     state: 'pirates'
@@ -742,12 +738,23 @@ Load pirates and examine the Firebase HTML5 websockets
 To delete a pirate we need to accomodate Firebase:
 
 ```
-  removePirate(key){
-    const pirates = {...this.state.pirates}
-    pirates[key] = null
-    this.setState({pirates})
-  }
+removePirate(key){
+  const pirates = {...this.state.pirates}
+  pirates[key] = null
+  this.setState({pirates})
+}
 ```
+
+Pirate.j
+
+```
+const myColor = '#C90813'
+
+const myStyle={
+  color: myColor
+}
+```
+
 
 ### Routing
 
