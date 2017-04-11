@@ -3,6 +3,7 @@ import Pirate from './Pirate'
 import Header from './Header'
 import PirateForm from './PirateForm'
 import piratesFile from './data/sample-pirates'
+import base from './base'
 
 class App extends Component {
 
@@ -15,6 +16,17 @@ class App extends Component {
       pirates: {}
     }
   }
+
+componentWillMount(){
+  this.ref = base.syncState(`daniel-deverell-pirates/pirates`, {
+    context: this,
+    state: 'pirates'
+  })
+}
+
+componentWillUmount(){
+  base.removeBinding(this.ref)
+}
 
   addPirate(pirate){
     //update state
@@ -32,11 +44,11 @@ class App extends Component {
     })
   }
 
-  removePirate(key){
-    const pirates = {...this.state.pirates}
-    delete pirates[key]
-    this.setState({pirates})
-  }
+removePirate(key){
+  const pirates = {...this.state.pirates}
+  pirates[key] = null
+  this.setState({pirates})
+}
 
   render() {
     return (
