@@ -732,7 +732,80 @@ To delete a pirate we need to accomodate Firebase:
 
 ### Routing
 
-`> npm install react-router --save`
+https://reacttraining.com/react-router/web/guides/quick-start
+
+`> npm install react-router-dom --save`
+
+index.js
+
+```
+import {
+  BrowserRouter as Router,
+  Route,
+  Miss
+} from 'react-router-dom'
+
+class Main extends React.Component {
+  render() {
+    return (
+    <Router>
+    <div>
+      <Route exact path="/" component={App}/>
+    </div>
+  </Router>
+      )
+  }
+}
+
+ReactDOM.render(
+  <Main />,
+  document.getElementById('root')
+  );
+```
+
+### Pirate Detail
+
+Use Header.js as a template
+
+```
+import React, { Component } from 'react'
+
+class PirateDetail extends Component {
+  render() {
+    return (
+      <div className="pirate-detail">
+        <h1>Pirate detail</h1>
+      </div>
+      )
+  }
+}
+
+export default PirateDetail;
+```
+
+`<Route path="/pirate/:pid" component={PirateDetail} />`:
+
+```
+import PirateDetail from './PirateDetail';
+
+class Main extends React.Component {
+  render() {
+    return (
+    <Router>
+    <div>
+      <Route exact path="/" component={App}/>
+      <Route path="/pirate/:pid" component={PirateDetail} />
+    </div>
+  </Router>
+      )
+  }
+}
+```
+
+We probably want the routing to occur in App.js to keep the header and replace <Pirate /> and PirateForm />
+
+
+
 
 
 
