@@ -741,8 +741,7 @@ index.js
 ```
 import {
   BrowserRouter as Router,
-  Route,
-  Miss
+  Route
 } from 'react-router-dom'
 
 class Main extends React.Component {
