@@ -2,9 +2,10 @@
 
 ## Homework
 
-Review session Ten notes. Download the final branch from class and use the additional data in sample-pirates.js in Pirate.js. include the pirate avatar image - drunkenPirate_avatar.png - as an image for each pirate. Add the descriptive text from the'desc' property. 
+Review session Ten notes. Download the final branch from class and use the additional data in sample-pirates.js to expand the display of piratical information. Try to include the pirate avatar image - drunkenPirate_avatar.png - as an image for each pirate. Add the descriptive text from the'desc' property. Add your own properties to the file if you wish.
 
-Be sure to edit the css to make your pirate entries look nice.
+You will need to edit the css to make your pirate entries and the additional information look nice.
+
 
 ## Reboot
 
