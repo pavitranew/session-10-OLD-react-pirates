@@ -80,7 +80,7 @@ Pirate.js:
 
 Examine props.
 
-Examine component structure (nesting).
+Examine component structure (nesting). Use the form. Examine and map each component.
 
 Native: `$0`
 
