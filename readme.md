@@ -14,8 +14,8 @@ $ subl .
 
 ```
 $ git init
-$git branch dev
-$git checkout dev
+$ git branch dev
+$ git checkout dev
 $ npm install 
 $ npm run start
 ```
@@ -224,17 +224,25 @@ In PirateForm.js:
 `<AddPirateForm addPirate={this.props.addPirate} />`:
 
 ```
+import React, { Component } from 'react';
+import AddPirateForm from './AddPirateForm'
+
+class PirateForm extends Component {
   render() {
     return (
       <div className="pirate-form">
-        <h3>Pirate Forms</h3>
-        <AddPirateForm addPirate={this.props.addPirate} />
+      <h3>Pirate Forms</h3>
+      <AddPirateForm addPirate={this.props.addPirate} />
       </div>
       )
   }
+}
+
+export default PirateForm;
 ```
 
 Examine AddPirateForm props
+
 
 AddPirateForm:
 
@@ -255,7 +263,7 @@ AddPirateForm:
 
 #### Use the form to add a pirate.
 
-Empty the form with a ref.
+Empty the form with a [ref](https://facebook.github.io/react/docs/refs-and-the-dom.html#adding-a-ref-to-a-class-component).
 
 `<form ref={ (input)=>this.pirateForm = input } onSubmit={(e) => this.createPirate(e)}>`:
 
@@ -285,6 +293,8 @@ createPirate(event) {
     this.pirateForm.reset()
   }
 ```
+
+The form should now empty.
 
 //////// Create a single pirate
 
@@ -353,10 +363,12 @@ Example: Doubling numbers:
 > var numbers = [1,5,8]
 > numbers
 > numbers.map(function(number){return number * 2})
-> var double = function(number){return number * 2}
+> const double = function(number){return number * 2}
 > double(5)
 > numbers.map(double)
 ```
+
+See also [session-1](https://github.com/mean-spring-2017/session-1/blob/master/_Arrays/array-methods.html)
 
 Pirate.js:
 
@@ -381,9 +393,15 @@ render(){
 Switch the json out for the .js version of samples, remove the import (`import piratesFile from './data/sample-pirates'`) and rollback to:
 
 ```
-<ul>
-  <li>Pirate</li>
-</ul>
+class Pirate extends React.Component {
+  render(){
+    return (
+      <ul>
+      <li>Pirate</li>
+      </ul>
+      )
+  }
+}
 ```
 
 App.js
@@ -392,17 +410,17 @@ App.js
 import piratesFile from './data/sample-pirates'
 ```
 
-Examine with console.log().
+(Check for errors - might need to recompile.)
 
 For this version of sample-pirates we cannot easily use .map which is for Arrays.
 
-Use `Object.keys()`
+Use `Object.keys()`  [Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys)
 
 Find App component in React tool. 
 
-In console: `> $r.state.pirates`
+In console: 
 
-Load samples and run again to see data. An object. Can't use map()?
+`> $r.state.pirates`
 
 `> Object.keys($r.state.pirates)`
 
@@ -414,10 +432,10 @@ App.js:
 return (
   <div className="App">
     <Header />
-    <div class="pirateList">
+    <div className="pirateList">
     {Object.keys(this.state.pirates)}
     </div>
-    <PirateForm addPirate={this.addPirate} loadSamples={this.loadSamples} />
+    <PirateForm addPirate={this.addPirate} />
   </div>
 );
 ```
@@ -437,16 +455,16 @@ Now that we have an Array:
 Pirate.js:
 
 ```
-  render(){
-    return (
-      <ul>
-        <li>{this.props.details.name}</li>
-      </ul>
-      )
-  }
+render(){
+  return (
+    <ul>
+      <li>{this.props.details.name}</li>
+    </ul>
+    )
+}
 ```
 
-Simplify:
+Simplify and add a few more properties:
 
 ```
   render(){
@@ -469,16 +487,18 @@ PirateForm:
 `<button onClick={this.props.loadSamples}>Load Sample Pirates</button>`:
 
 ```
-return (
-  <div>
-  <h3>Pirate Forms</h3>
-  <AddPirateForm addPirate={this.props.addPirate} />
-  <button onClick={this.props.loadSamples}>Load Sample Pirates</button>
-  </div>
-  )
+  render() {
+    return (
+      <div className="pirate-form">
+      <h3>Pirate Forms</h3>
+      <AddPirateForm addPirate={this.props.addPirate} />
+      <button onClick={this.props.loadSamples}>Load Sample Pirates</button>
+      </div>
+      )
+  }
 ```
 
-App.js
+App.js:
 
 We've alreay imported: `import piratesFile from './sample-pirates'`
 
@@ -505,7 +525,6 @@ We can use the button in App.js:
 
 ```
 <button onClick={this.loadSamples}>Load Sample Pirates</button>
-
 ```
 
 Delete and try in PirateForm.
@@ -544,7 +563,7 @@ removePirate(key){
 Constructor in App:
 
 ```
-this.removePirate = this.removePirate.bind(this);
+this.removePirate = this.removePirate.bind(this)
 ```
 
 $r (App)
@@ -555,18 +574,18 @@ $r.removePirate('pirate1')
 
 On Pirate in App `removePirate = {this.removePirate}`:
 
+<!-- Not yet: 
+`index={key}` -->
+
 ```
 {
   Object
   .keys(this.state.pirates)
   .map( key => <Pirate key={key} 
-    index={key}
     details={this.state.pirates[key]} 
     removePirate={this.removePirate} /> )
 }
 ```
-
-Test with one pirate (pirate1).
 
 PirateForm:
 
@@ -596,7 +615,7 @@ Pirate.js:
 
 You cannot access the key inside a component
 
-Pass it along `index={key}` in App:
+Pass it along as part of the Pirate component `index={key}` in App:
 
 ```
 {
@@ -609,7 +628,7 @@ Pass it along `index={key}` in App:
 }
 ```
 
-Pirate.js:
+Pirate.js (only allowable elment as child of <ul> is <li>):
 
 ```
 return (
@@ -617,7 +636,7 @@ return (
     <li>{details.name}</li>
     <li>{details.weapon}</li>
     <li>{details.vessel}</li>
-    <button onClick={() => this.props.removePirate(this.props.index)}>RemovePirate</button>
+    <li><button onClick={() => this.props.removePirate(this.props.index)}>X</button></li>
   </ul>
   )
 ```
@@ -628,7 +647,7 @@ Create an account at https://firebase.google.com/
 
 Create a new project called firstname-lastname-pirates
 
-Go to the empty databse (left hand menu)
+Go to the empty database (left hand menu)
 
 Go to rules:
 
